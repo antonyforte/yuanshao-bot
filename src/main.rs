@@ -432,6 +432,41 @@ async fn handle_command_logic(text: &str, message: &Message, bot: Arc<Bot>, user
                 send_message(chat_id, "Este comando só pode ser utilizado no grupo de administradores ou no grupo do seu time.", &bot).await;
             }
         }
+        "/calendario" => {
+            let calendar_message = "🗓 CALENDARIO DO EVENTO 🗓
+
+10/08 - Mensagem secreta de aviso 
+
+14/08 - Anuncio do Evento e abertura das inscrições 
+
+20/08 - Fim das inscrições 
+
+22/08 - Sorteio dos times
+
+23/08 - Rebelião dos Turbantes Amarelos 184 - RUNNING GAME 
+
+26/08 - Campanha contra Dong Zhuo 190 - IMPOSTOR
+
+27/08 - 🧧 A Lenda de Lu Bu 🧧 (Aberto)
+
+28/08 - Batalha de Guandu 200 -  PERGUNTAS & RESPOSTAS
+
+
+29/08 - Batalha de Xinye 207 -  JOGO DA MEMÓRIA
+
+30/08 - Batalha de Chibi 208 - WAR PPT1
+
+31/08 - Batalha de Nanjun 209 - TRY LUCK
+
+01/09 -🌙  Ascenção à Lua - Contos de Diao Chan 🌙 (Aberto)
+
+02/09 - Batalha da Provincia de Jing 214 - BATALHA NAVAL
+
+04/09 - Batalha de Hefei 215 - SOBREVIVENCIA E ESCOLHAS TEMATICO
+
+06/09 - Batalha de Fan Castle 219  - WAR PPT 2";
+            send_message(chat_id, calendar_message, &bot).await;
+        }
         _ => {
             // Comandos de Admin
             let admin_group_id = env::var("ADMIN_GROUP_ID").expect("ADMIN_GROUP_ID not set");
@@ -530,6 +565,10 @@ async fn set_menu_commands(bot: Arc<Bot>) -> Result<(), String> {
         BotCommand::builder()
             .command("/entregarmissao")
             .description("Apresente seus feitos para minha avaliação.")
+            .build(),
+        BotCommand::builder()
+            .command("/calendario")
+            .description("Consulte o calendário do evento.")
             .build(),
     ];
 
