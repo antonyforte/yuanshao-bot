@@ -169,6 +169,16 @@ fn inicializar_times() {
     }
 }
 
+fn get_team_group_id(team_name: &str) -> i64 {
+    let group_id_str = match team_name {
+        "shu" => env::var("SHU_GROUP_ID").unwrap_or_else(|_| "0".to_string()),
+        "wei" => env::var("WEI_GROUP_ID").unwrap_or_else(|_| "0".to_string()),
+        "wu" => env::var("WU_GROUP_ID").unwrap_or_else(|_| "0".to_string()),
+        _ => "0".to_string(),
+    };
+    group_id_str.parse().unwrap_or(0)
+}
+
 #[tokio::main]
 async fn main() {
     dotenv().ok();
@@ -556,6 +566,11 @@ async fn handle_admin_commands(text: &str, chat_id: i64, bot: &Bot) {
 
         if write_time_db(time, &db).is_ok() {
             send_message(chat_id, &format!("Soldados do time {} atualizados. Total: {}", time.to_uppercase(), db.soldados), bot).await;
+            // Send notification to team group
+            let team_group_id = get_team_group_id(time);
+            if team_group_id != 0 { // Check if a valid ID is set
+                send_message(team_group_id, &format!("Atenção, nobres guerreiros de {}! Seus soldados foram atualizados. Contamos agora com {} bravos combatentes em nossas fileiras!", time.to_uppercase(), db.soldados), bot).await;
+            }
         } else {
             send_message(chat_id, &format!("Falha ao salvar DB do time {}", time), bot).await;
         }
@@ -593,6 +608,11 @@ async fn handle_admin_commands(text: &str, chat_id: i64, bot: &Bot) {
 
         if write_time_db(time, &db).is_ok() {
             send_message(chat_id, &format!("Missão {} do naipe {} para o time {} atualizada.", missao, naipe_idx, time.to_uppercase()), bot).await;
+            // Send notification to team group
+            let team_group_id = get_team_group_id(time);
+            if team_group_id != 0 { // Check if a valid ID is set
+                send_message(team_group_id, &format!("Atenção, guerreiros de {}! A missão do naipe {} ({}) foi atualizada em seus registros. Que a glória os acompanhe!", time.to_uppercase(), naipe_idx, missao.to_uppercase()), bot).await;
+            }
         } else {
             send_message(chat_id, &format!("Falha ao salvar DB do time {}", time), bot).await;
         }
