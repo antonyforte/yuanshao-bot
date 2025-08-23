@@ -4,7 +4,7 @@
     {
       "pedra": 0,
       "papel": 0,
-      "tesoura": 0
+      "tesoura": 1
     },
     {
       "pedra": 0,
@@ -17,22 +17,22 @@
       "tesoura": 0
     },
     {
-      "pedra": 0,
-      "papel": 0,
-      "tesoura": 0
-    },
-    {
-      "pedra": 0,
-      "papel": 0,
-      "tesoura": 0
-    },
-    {
-      "pedra": 0,
+      "pedra": 1,
       "papel": 0,
       "tesoura": 0
     },
     {
       "pedra": 1,
+      "papel": 0,
+      "tesoura": 0
+    },
+    {
+      "pedra": 0,
+      "papel": 1,
+      "tesoura": 0
+    },
+    {
+      "pedra": 2,
       "papel": 0,
       "tesoura": 0
     },
