@@ -751,7 +751,7 @@ async fn send_team_db(chat_id: i64, team_name: &str, bot: &Bot) {
         let tesoura_emoji = emojis_for_naipe.and_then(|e| e.get("Tesoura")).map_or("✂️", |s| s.as_str());
 
         response.push_str(&format!(
-            "Naipe {}: {} Pedra: {} | {} Papel: {} | {} Tesoura: {}\n",
+            "\nNaipe {}: {} Pedra: {} | {} Papel: {} | {} Tesoura: {}\n",
             naipe_index,
             pedra_emoji, naipe.pedra,
             papel_emoji, naipe.papel,

@@ -13,7 +13,7 @@
     },
     {
       "pedra": 0,
-      "papel": 0,
+      "papel": 1,
       "tesoura": 0
     },
     {
@@ -28,7 +28,7 @@
     },
     {
       "pedra": 0,
-      "papel": 0,
+      "papel": 1,
       "tesoura": 0
     },
     {
@@ -42,8 +42,8 @@
       "tesoura": 0
     },
     {
-      "pedra": 0,
-      "papel": 0,
+      "pedra": 1,
+      "papel": 1,
       "tesoura": 0
     },
     {
