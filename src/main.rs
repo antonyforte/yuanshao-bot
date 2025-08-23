@@ -86,7 +86,7 @@ fn parse_missoes_emojis(missoes_text: &str) -> MissionEmojis {
             let naipe_num_re = Regex::new(r"^(\d{1,2})").unwrap(); // Changed to \d{1,2} to match 1 or 2 digits
             if let Some(caps) = naipe_num_re.captures(first_line) {
                 let naipe_index = caps[1].parse::<usize>().unwrap();
-                let mission_type_re = Regex::new(r"● ([^\s]+) .+? \((Pedra|Papel|Tesoura)\)").unwrap();
+                let mission_type_re = Regex::new(r"●\s*([^\s]+)\s*.+?\s*\((Pedra|Papel|Tesoura)\)").unwrap();
                 let mut current_naipe_emojis = HashMap::new();
 
                 for mission_caps in mission_type_re.captures_iter(rest_of_section) {
@@ -336,24 +336,24 @@ async fn handle_command_logic(text: &str, message: &Message, bot: Arc<Bot>, user
 
     match text {
         "/start" => send_message(chat_id, "Saudações, nobre guerreiro! Eu, Yuan Shao, líder da aliança contra a tirania, dou-lhe as boas-vindas. O que o traz à minha presença?", &bot).await,
-        "/inscricao" => {
-            if message.chat.type_field != ChatType::Private {
-                send_message(chat_id, "Meu nobre, para se juntar à minha causa, peço que me chame em particular. A discrição é uma virtude dos grandes líderes.", &bot).await;
-                return;
-            }
-            let user = message.from.as_ref().unwrap();
-            let inscritos = read_inscritos().unwrap_or_default();
-            if inscritos.iter().any(|i| i.user == user.username.as_deref().unwrap_or("")) {
-                send_message(chat_id, "Guerreiro, sua lealdade já foi registrada. Você já faz parte de minha nobre aliança!", &bot).await;
-                return;
-            }
-            states.insert(user_id, UserState {
-                step: "aguardando_confirmacao_inscricao".to_string(),
-                time: None,
-                entregas: Vec::new(),
-            });
-            send_message(chat_id, "Você, nobre guerreiro, deseja jurar lealdade a mim, Yuan Shao, e se inscrever em minha gloriosa campanha? Responda com 'sim' para selar seu destino.", &bot).await;
-        }
+        // "/inscricao" => {
+        //     if message.chat.type_field != ChatType::Private {
+        //         send_message(chat_id, "Meu nobre, para se juntar à minha causa, peço que me chame em particular. A discrição é uma virtude dos grandes líderes.", &bot).await;
+        //         return;
+        //     }
+        //     let user = message.from.as_ref().unwrap();
+        //     let inscritos = read_inscritos().unwrap_or_default();
+        //     if inscritos.iter().any(|i| i.user == user.username.as_deref().unwrap_or("")) {
+        //         send_message(chat_id, "Guerreiro, sua lealdade já foi registrada. Você já faz parte de minha nobre aliança!", &bot).await;
+        //         return;
+        //     }
+        //     states.insert(user_id, UserState {
+        //         step: "aguardando_confirmacao_inscricao".to_string(),
+        //         time: None,
+        //         entregas: Vec::new(),
+        //     });
+        //     send_message(chat_id, "Você, nobre guerreiro, deseja jurar lealdade a mim, Yuan Shao, e se inscrever em minha gloriosa campanha? Responda com 'sim' para selar seu destino.", &bot).await;
+        // }
         "/inscritos" => {
             let admin_group_id = env::var("ADMIN_GROUP_ID").expect("ADMIN_GROUP_ID not set");
             if chat_id.to_string() != admin_group_id {
@@ -415,21 +415,27 @@ async fn handle_command_logic(text: &str, message: &Message, bot: Arc<Bot>, user
         }
         "/shu" | "/wei" | "/wu" => {
             let admin_group_id = env::var("ADMIN_GROUP_ID").expect("ADMIN_GROUP_ID not set");
-            let shu_group_id = env::var("SHU_GROUP_ID").unwrap_or_else(|_| "0".to_string()); // Placeholder
-            let wei_group_id = env::var("WEI_GROUP_ID").unwrap_or_else(|_| "0".to_string()); // Placeholder
-            let wu_group_id = env::var("WU_GROUP_ID").unwrap_or_else(|_| "0".to_string()); // Placeholder
+            let shu_group_id = env::var("SHU_GROUP_ID").unwrap_or_else(|_| "0".to_string());
+            let wei_group_id = env::var("WEI_GROUP_ID").unwrap_or_else(|_| "0".to_string());
+            let wu_group_id = env::var("WU_GROUP_ID").unwrap_or_else(|_| "0".to_string());
 
             let team_name = text.trim_start_matches('/').to_lowercase();
             let chat_id_str = chat_id.to_string();
 
-            if chat_id_str == admin_group_id
-                || (team_name == "shu" && chat_id_str == shu_group_id)
+            let is_admin_group = chat_id_str == admin_group_id;
+            let is_correct_team_group = (team_name == "shu" && chat_id_str == shu_group_id)
                 || (team_name == "wei" && chat_id_str == wei_group_id)
-                || (team_name == "wu" && chat_id_str == wu_group_id)
-            {
+                || (team_name == "wu" && chat_id_str == wu_group_id);
+
+            if is_admin_group || is_correct_team_group {
                 send_team_db(chat_id, &team_name, &bot).await;
             } else {
-                send_message(chat_id, "Este comando só pode ser utilizado no grupo de administradores ou no grupo do seu time.", &bot).await;
+                send_message(
+                    chat_id,
+                    "Este comando só pode ser utilizado no grupo de administradores ou no grupo do seu time.",
+                    &bot,
+                )
+                .await;
             }
         }
         "/calendario" => {
@@ -466,6 +472,48 @@ async fn handle_command_logic(text: &str, message: &Message, bot: Arc<Bot>, user
 
 06/09 - Batalha de Fan Castle 219  - WAR PPT 2";
             send_message(chat_id, calendar_message, &bot).await;
+        }
+        "/regras" => {
+            let regras_message = "🚫 Regras do Evento 🚫
+
+● A partir do dia 23/08, à 00h, os times estarão liberados para completar as missões;
+
+● Para completar a missão o jogador deve estar inscrito no evento e jogando com o emoji do time;
+
+● A entrega das missões devem ser feitas no @yuanshao_bot. Envie o print da missão realizada + o link do final da partida;
+
+● Cada time iniciará com 10000 Soldados;
+
+● Não é permitido a entrada de inscritos pós período de inscrição. Apenas em casos de desistência; 
+
+● Cair AFK resultará numa penalidade de -1 ponto para a equipe;
+
+● Missões de AFK não contam;
+
+● É estritamente proibido qualquer tipo de antijogo/ferimento de regras do grupo durante as partidas. As partidas devem ser jogadas normalmente para completar as missões. Caso houver qualquer indício de quebra de regras, o time perderá 20pnts por quebra de regras.";
+            send_message(chat_id, regras_message, &bot).await;
+        }
+        "/premios" => {
+            let premios_message = "🏆 PREMIAÇÃO
+
+🥇 Lugar: 
+
+— 4 Produtos da DH Store [com exceção da corrida maluca e removedor].
+— 5 Removedores de advertência  para cada participante.
+— 300 Lobunos para cada participante.
+
+🥈 Lugar: 
+
+— 3 Produto da DH Store [com exceção dos fks pass, corrida maluca e removedor].
+— 3 Removedores de advertência para cada participante.
+— 200 Lobunos para cada participante.
+
+🥉 Lugar:
+
+— 2 Produto da DH Store [com exceção dos fks pass, corrida maluca e removedor].
+— 2 Removedor de advertência para cada participante.
+— 100 Lobunos para cada participante.";
+            send_message(chat_id, premios_message, &bot).await;
         }
         _ => {
             // Comandos de Admin
@@ -554,10 +602,10 @@ async fn download_file(bot: &Bot, file_id: &str, time: &str, user_id: i64) -> Re
 
 async fn set_menu_commands(bot: Arc<Bot>) -> Result<(), String> {
     let commands = vec![
-        BotCommand::builder()
-            .command("/inscricao")
-            .description("Jure lealdade e junte-se à minha nobre causa.")
-            .build(),
+        // BotCommand::builder()
+        //     .command("/inscricao")
+        //     .description("Jure lealdade e junte-se à minha nobre causa.")
+        //     .build(),
         BotCommand::builder()
             .command("/missoes")
             .description("Consulte meus decretos e missões atuais.")
@@ -569,6 +617,14 @@ async fn set_menu_commands(bot: Arc<Bot>) -> Result<(), String> {
         BotCommand::builder()
             .command("/calendario")
             .description("Consulte o calendário do evento.")
+            .build(),
+        BotCommand::builder()
+            .command("/regras")
+            .description("Consulte as regras do evento.")
+            .build(),
+        BotCommand::builder()
+            .command("/premios")
+            .description("Consulte a premiação do evento.")
             .build(),
     ];
 
@@ -682,7 +738,7 @@ async fn send_team_db(chat_id: i64, team_name: &str, bot: &Bot) {
         }
     };
 
-    let mut response = format!("📊 **Banco de Dados do Time {}** 📊\n\n", team_name.to_uppercase());
+    let mut response = format!("📊 Banco de Dados do Time {} 📊\n\n", team_name.to_uppercase());
     response.push_str(&format!("Soldados: {}\n\n", db.soldados));
     response.push_str("Missões por Naipe:\n");
 
