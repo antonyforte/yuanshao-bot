@@ -1,6 +1,41 @@
 {
-  "soldados": 10000,
+  "soldados": 13500,
   "naipes": [
+    {
+      "pedra": 1,
+      "papel": 0,
+      "tesoura": 1
+    },
+    {
+      "pedra": 0,
+      "papel": 1,
+      "tesoura": 1
+    },
+    {
+      "pedra": 1,
+      "papel": 1,
+      "tesoura": 0
+    },
+    {
+      "pedra": 1,
+      "papel": 0,
+      "tesoura": 1
+    },
+    {
+      "pedra": 1,
+      "papel": 0,
+      "tesoura": 2
+    },
+    {
+      "pedra": 1,
+      "papel": 1,
+      "tesoura": 0
+    },
+    {
+      "pedra": 2,
+      "papel": 0,
+      "tesoura": 1
+    },
     {
       "pedra": 0,
       "papel": 0,
@@ -9,41 +44,6 @@
     {
       "pedra": 0,
       "papel": 1,
-      "tesoura": 0
-    },
-    {
-      "pedra": 0,
-      "papel": 0,
-      "tesoura": 0
-    },
-    {
-      "pedra": 1,
-      "papel": 0,
-      "tesoura": 0
-    },
-    {
-      "pedra": 1,
-      "papel": 0,
-      "tesoura": 0
-    },
-    {
-      "pedra": 0,
-      "papel": 1,
-      "tesoura": 0
-    },
-    {
-      "pedra": 2,
-      "papel": 0,
-      "tesoura": 0
-    },
-    {
-      "pedra": 0,
-      "papel": 0,
-      "tesoura": 0
-    },
-    {
-      "pedra": 0,
-      "papel": 0,
       "tesoura": 0
     },
     {

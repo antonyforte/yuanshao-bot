@@ -480,7 +480,7 @@ async fn handle_command_logic(text: &str, message: &Message, bot: Arc<Bot>, user
 
 ● Para completar a missão o jogador deve estar inscrito no evento e jogando com o emoji do time;
 
-● A entrega das missões devem ser feitas no @yuanshao_bot. Envie o print da missão realizada + o link do final da partida;
+● A entrega das missões devem ser feitas no @romancedos3reinos_bot. Envie o print da missão realizada + o link do final da partida;
 
 ● Cada time iniciará com 10000 Soldados;
 
