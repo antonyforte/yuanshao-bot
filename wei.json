@@ -2,84 +2,24 @@
   "soldados": 10000,
   "naipes": [
     {
-      "pedra": 1,
+      "pedra": 2,
       "papel": 0,
-      "tesoura": 1
-    },
-    {
-      "pedra": 1,
-      "papel": 2,
-      "tesoura": 0
-    },
-    {
-      "pedra": 0,
-      "papel": 2,
-      "tesoura": 0
-    },
-    {
-      "pedra": 0,
-      "papel": 0,
-      "tesoura": 1
-    },
-    {
-      "pedra": 1,
-      "papel": 0,
-      "tesoura": 0
-    },
-    {
-      "pedra": 0,
-      "papel": 2,
-      "tesoura": 0
-    },
-    {
-      "pedra": 0,
-      "papel": 1,
-      "tesoura": 0
-    },
-    {
-      "pedra": 1,
-      "papel": 0,
-      "tesoura": 0
+      "tesoura": 2
     },
     {
       "pedra": 2,
       "papel": 2,
-      "tesoura": 1
-    },
-    {
-      "pedra": 0,
-      "papel": 1,
       "tesoura": 0
     },
     {
-      "pedra": 0,
-      "papel": 0,
+      "pedra": 1,
+      "papel": 2,
       "tesoura": 0
     },
     {
-      "pedra": 0,
+      "pedra": 1,
       "papel": 0,
-      "tesoura": 0
-    },
-    {
-      "pedra": 0,
-      "papel": 0,
-      "tesoura": 1
-    },
-    {
-      "pedra": 0,
-      "papel": 0,
-      "tesoura": 0
-    },
-    {
-      "pedra": 0,
-      "papel": 0,
-      "tesoura": 0
-    },
-    {
-      "pedra": 0,
-      "papel": 0,
-      "tesoura": 0
+      "tesoura": 4
     },
     {
       "pedra": 1,
@@ -88,7 +28,47 @@
     },
     {
       "pedra": 0,
-      "papel": 1,
+      "papel": 3,
+      "tesoura": 1
+    },
+    {
+      "pedra": 0,
+      "papel": 2,
+      "tesoura": 1
+    },
+    {
+      "pedra": 1,
+      "papel": 0,
+      "tesoura": 0
+    },
+    {
+      "pedra": 3,
+      "papel": 2,
+      "tesoura": 1
+    },
+    {
+      "pedra": 0,
+      "papel": 2,
+      "tesoura": 0
+    },
+    {
+      "pedra": 0,
+      "papel": 0,
+      "tesoura": 0
+    },
+    {
+      "pedra": 0,
+      "papel": 0,
+      "tesoura": 0
+    },
+    {
+      "pedra": 0,
+      "papel": 0,
+      "tesoura": 5
+    },
+    {
+      "pedra": 0,
+      "papel": 0,
       "tesoura": 1
     },
     {
@@ -99,6 +79,21 @@
     {
       "pedra": 0,
       "papel": 0,
+      "tesoura": 1
+    },
+    {
+      "pedra": 2,
+      "papel": 0,
+      "tesoura": 0
+    },
+    {
+      "pedra": 0,
+      "papel": 1,
+      "tesoura": 1
+    },
+    {
+      "pedra": 0,
+      "papel": 2,
       "tesoura": 0
     },
     {
@@ -110,6 +105,11 @@
       "pedra": 0,
       "papel": 0,
       "tesoura": 0
+    },
+    {
+      "pedra": 0,
+      "papel": 0,
+      "tesoura": 1
     }
   ]
 }
